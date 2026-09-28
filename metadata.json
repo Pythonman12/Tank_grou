@@ -1,0 +1,6 @@
+{
+  "name": "대포 키우기 IO (Diep.io Style & GDD)",
+  "description": "diep.io 스타일의 2D 탱크 육성 배틀 아레나 게임 및 상세 게임 개발 계획서 (PDF / 한글 문서 다운로드 지원)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
