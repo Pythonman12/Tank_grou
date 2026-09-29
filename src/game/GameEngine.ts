@@ -376,17 +376,17 @@ export class GameEngine {
       moveY *= 0.7071;
     }
 
-    // Level slowdown curve: gentle weight scaling for high-level tanks (Lv 1: 1.0x -> Lv 45: ~0.84x)
-    // Avoids excessive sluggishness at high levels while preserving tank solidity & satisfying agility
-    const levelSlowdown = Math.max(0.84, 1.0 - (p.level - 1) * 0.0036);
-    const moveSpeed = 1.34 * levelSlowdown * (1 + p.stats.movementSpeed * 0.07);
-    const accel = 6.2;
+    // Level slowdown curve: gentle weight scaling for high-level tanks (Lv 1: 1.0x -> Lv 45: ~0.88x)
+    // Avoids sluggishness at high levels while preserving tank solidity & satisfying agility
+    const levelSlowdown = Math.max(0.88, 1.0 - (p.level - 1) * 0.0028);
+    const moveSpeed = 1.62 * levelSlowdown * (1 + p.stats.movementSpeed * 0.075);
+    const accel = 7.0;
     p.vx += moveX * moveSpeed * accel * dt;
     p.vy += moveY * moveSpeed * accel * dt;
 
     // Friction
-    p.vx *= Math.pow(0.89, dt * 60);
-    p.vy *= Math.pow(0.89, dt * 60);
+    p.vx *= Math.pow(0.895, dt * 60);
+    p.vy *= Math.pow(0.895, dt * 60);
 
     p.x += p.vx;
     p.y += p.vy;
@@ -510,15 +510,15 @@ export class GameEngine {
         desiredMoveY /= moveLen;
       }
 
-      // Apply gentle level slowdown for bots as well (Lv 1: 1.0x -> Lv 45: ~0.82x)
-      const botLevelSlowdown = Math.max(0.82, 1.0 - (bot.level - 1) * 0.004);
-      const moveSpeed = 0.78 * botLevelSlowdown * (1 + bot.stats.movementSpeed * 0.045);
-      const accel = 4.0;
+      // Apply gentle level slowdown for bots as well (Lv 1: 1.0x -> Lv 45: ~0.85x)
+      const botLevelSlowdown = Math.max(0.85, 1.0 - (bot.level - 1) * 0.0032);
+      const moveSpeed = 0.95 * botLevelSlowdown * (1 + bot.stats.movementSpeed * 0.05);
+      const accel = 4.6;
       bot.vx += desiredMoveX * moveSpeed * accel * dt;
       bot.vy += desiredMoveY * moveSpeed * accel * dt;
 
-      bot.vx *= Math.pow(0.88, dt * 60);
-      bot.vy *= Math.pow(0.88, dt * 60);
+      bot.vx *= Math.pow(0.885, dt * 60);
+      bot.vy *= Math.pow(0.885, dt * 60);
 
       bot.x += bot.vx;
       bot.y += bot.vy;
@@ -598,8 +598,8 @@ export class GameEngine {
     const startX = tank.x + forwardX * (tank.radius + barrel.length) + perpX * barrel.offsetY;
     const startY = tank.y + forwardY * (tank.radius + barrel.length) + perpY * barrel.offsetY;
 
-    // Slower bullet speeds for more deliberate, dodgable, tactical diep.io pacing
-    const baseSpeed = 3.2 * (1 + tank.stats.bulletSpeed * 0.12) * barrel.bulletSpeedMult;
+    // Punchy, satisfying bullet speeds for responsive tactical combat
+    const baseSpeed = 3.8 * (1 + tank.stats.bulletSpeed * 0.12) * barrel.bulletSpeedMult;
     const vx = Math.cos(totalAngle) * baseSpeed + tank.vx * 0.15;
     const vy = Math.sin(totalAngle) * baseSpeed + tank.vy * 0.15;
 
